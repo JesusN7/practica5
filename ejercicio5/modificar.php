@@ -46,7 +46,6 @@ try {
     if (!$usuario) {
         $errores[] = "Usuario no encontrado.";
     } else {
-        // Si el usuario existe, definir $nuevoRol para evitar errores
         $nuevoRol = $usuario['rol'];
     }
 
@@ -81,7 +80,7 @@ try {
                 $nuevoRol = $_POST['rol'] ?? $usuario['rol']; // Administrador puede cambiar roles de otros usuarios
             }
 
-            // Si no hay errores, proceder con la actualización
+            // Si no hay errores, actualizar
             if (empty($errores)) {
                 $sql = "UPDATE clientes SET nombre = :nombre, direccion = :direccion, localidad = :localidad, 
                         provincia = :provincia, telefono = :telefono, email = :email, rol = :rol WHERE dni = :dni";

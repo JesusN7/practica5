@@ -17,7 +17,7 @@ if ($_SESSION['rol'] !== 'administrador' && $_SESSION['rol'] !== 'editor') {
 try {
     $conexion = conectar();
 
-    // Verificar si se ha proporcionado un código de artículo
+    // Verificar si se ha proporcionado un código 
     if (isset($_GET['codigo'])) {
         $codigo = $_GET['codigo'];
 
@@ -45,7 +45,7 @@ try {
         $precio = trim($_POST['precio']);
         $imagen_nueva = $_FILES['imagen_nueva'];
 
-        // Validaciones utilizando las funciones
+        // Validaciones
         $errores = [];
 
         if (!validarDescripcion($descripcion)) {
@@ -71,14 +71,13 @@ try {
                 $errores[] = "La imagen no debe tener más de 300 KB.";
             }
 
-            // Verificar dimensiones de la imagen
+            // Verificar dimensiones 
             list($width, $height) = getimagesize($imagen_nueva['tmp_name']);
             if ($width > 200 || $height > 200) {
                 $errores[] = "La imagen no debe exceder 200x200 píxeles.";
             }
         }
 
-        // Si hay errores, redirigir con los errores
         if (!empty($errores)) {
             $_SESSION['errores'] = $errores;
             header("Location: modificar_articulo.php?codigo=" . $codigo);
@@ -88,7 +87,6 @@ try {
         $archivoDestino = $articulo['imagen']; // Mantener la imagen que ya tenemos por defecto
 
         if (isset($imagen_nueva) && $imagen_nueva['error'] === UPLOAD_ERR_OK) {
-            // Verificar si la imagen ya existe en la carpeta
             $directorioDestino = 'imagenes/';
             $nombreArchivo = basename($imagen_nueva['name']);
             $rutaCompleta = $directorioDestino . $nombreArchivo;

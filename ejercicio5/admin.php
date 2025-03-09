@@ -58,10 +58,9 @@ try {
         $stmt->execute();
     }
 
-    // Obtener todos los usuarios para la página actual
+    // Obtener todos los usuarios 
     $usuarios = $stmt->fetchAll();
 
-    // Obtener el total de registros para calcular el número total de páginas
     if (isset($_GET['buscar']) && !empty($_GET['buscar'])) {
         $sql_count = "SELECT COUNT(*) FROM clientes WHERE dni LIKE :dni";
 

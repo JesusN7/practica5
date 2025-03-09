@@ -20,7 +20,7 @@ if ($_SESSION['rol'] !== 'administrador' && $_SESSION['rol'] !== 'editor') {
     exit();
 }
 
-// Obtener el código del artículo a eliminar desde el formulario POST
+// Obtener el código del artículo a eliminar
 $codigo = $_POST['codigo'] ?? null;
 
 if (!$codigo) {
@@ -46,7 +46,7 @@ try {
         exit();
     }
 
-    // Eliminar el artículo de la base de datos
+    // Eliminar el artículo 
     $sql = "DELETE FROM articulos WHERE codigo = :codigo";
     $stmt = $conexion->prepare($sql);
     $stmt->execute([':codigo' => $codigo]);
@@ -62,7 +62,7 @@ try {
     exit();
 }
 
-// Si hubo errores, guardarlos en la sesión
+// Si hubo errores, guardarlos
 if (!empty($errores)) {
     $_SESSION['errores'] = $errores;
     header("Location: listar_articulos.php");

@@ -3,7 +3,6 @@ session_start();
 require_once 'conexion.php';
 require_once 'funciones.php';
 
-// Restringir acceso solo a administradores y editores
 if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], ['administrador', 'editor'])) {
     header("Location: login.php");
     exit();
@@ -18,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $categoria = trim($_POST['categoria']);
     $precio = trim($_POST['precio']);
 
-    // Validaciones de datos utilizando las funciones
+    // Validaciones
     if (!validarCodigo($codigo)) {
         $errores[] = "El código debe tener tres letras seguidas de hasta cinco números.";
     }
@@ -109,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Guardar errores en sesión
+    // Guardar errores
     $_SESSION['errores'] = $errores;
     header("Location: crear_articulo.php");
     exit();

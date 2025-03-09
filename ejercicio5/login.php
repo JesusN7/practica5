@@ -6,7 +6,6 @@ require_once 'funciones.php';
 $errores = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitizar y validar los datos de entrada
     $dni = htmlspecialchars(trim($_POST['dni'] ?? ''));
     $password = trim($_POST['password'] ?? '');
 
@@ -55,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Guardar errores en sesión y redirigir al login
+    // Guardar errores
     if (!empty($errores)) {
         $_SESSION['errores'] = $errores;
         header("Location: login.php");

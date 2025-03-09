@@ -2,7 +2,6 @@
 session_start();
 require_once 'conexion.php';
 
-// Verificación de acceso
 if (!isset($_SESSION['rol'])) {
     header("Location: login.php");
     exit();
@@ -11,7 +10,7 @@ if (!isset($_SESSION['rol'])) {
 try {
     $conexion = conectar();
 
-    // Validar ordenamiento seguro
+    // Ordenamiento
     $orden = strtoupper($_GET['orden'] ?? 'ASC');
     if (!in_array($orden, ['ASC', 'DESC'])) {
         $orden = 'ASC';
@@ -24,13 +23,13 @@ try {
     $pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
     if ($pagina < 1) $pagina = 1;
 
-    // Cálculo del desplazamiento
+    // Desplazamiento
     $inicio = ($pagina - 1) * $PAGS;
 
     // Búsqueda por código
     $codigo = trim($_GET['buscar'] ?? '');
 
-    // Construcción dinámica de la consulta
+    // Consulta
     $sql = "SELECT * FROM articulos";
     $sqlCount = "SELECT COUNT(*) FROM articulos";
     $parametros = [];
@@ -44,7 +43,6 @@ try {
     $sql .= " ORDER BY precio $orden LIMIT :inicio, :num_articulos";
     $stmt = $conexion->prepare($sql);
 
-    // Bind de parámetros
     foreach ($parametros as $clave => $valor) {
         $stmt->bindValue($clave, $valor, PDO::PARAM_STR);
     }
@@ -62,7 +60,6 @@ try {
     $totalArticulos = $totalStmt->fetchColumn();
     $totalPaginas = max(ceil($totalArticulos / $PAGS), 1);
 
-    // Ajustar página si está fuera del rango
     if ($pagina > $totalPaginas) {
         $pagina = $totalPaginas;
     }

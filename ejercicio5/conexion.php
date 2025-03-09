@@ -15,7 +15,6 @@ function conectar() {
 
             $conexion = new PDO($dsn, $usuario, $contraseña, $opciones);
         } catch (PDOException $e) {
-            // Registrar el error en un log en vez de mostrarlo en pantalla
             error_log("Error de conexión: " . $e->getMessage());
             throw new Exception("Error al conectar con la base de datos."); 
         }

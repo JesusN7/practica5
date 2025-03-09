@@ -20,7 +20,6 @@ try {
     $stmtEditor->execute([':dni' => $dniEditor]);
     $editor = $stmtEditor->fetch();
 
-    // Si no se encuentra al editor, se maneja el error
     if (!$editor) {
         $errores[] = "Editor no encontrado.";
     }
@@ -28,7 +27,6 @@ try {
     $errores[] = "Error al obtener los datos del editor: " . $e->getMessage();
 }
 
-// Si hubo errores, redirigir y mostrar mensajes
 if (!empty($errores)) {
     $_SESSION['errores'] = $errores;
     header("Location: login.php");
